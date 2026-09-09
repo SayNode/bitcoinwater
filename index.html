@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bitcoin Water — Coming Soon</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <span class="topbar__label">Bitcoin Water</span>
+      <span class="topbar__label"><span class="topbar__word" data-can="still">Still</span> &amp; <span class="topbar__word" data-can="sparkling">Sparkling</span> · 473 ml</span>
+    </header>
+
+    <main class="hero">
+      <h1 class="hero__title">Coming soon</h1>
+      <p class="hero__subtitle">Near you</p>
+
+      <div class="cans">
+        <img class="cans__can cans__can--sparkling" data-can="sparkling" src="assets/can-sparkling.png" alt="Bitcoin Water sparkling can" />
+        <img class="cans__can cans__can--still" data-can="still" src="assets/can-still.png" alt="Bitcoin Water still can" />
+      </div>
+
+      <a class="btn" href="https://yuvoi.com/r/bitcoin">
+        <span class="btn__mark">₿</span>
+        <span>Learn more about Bitcoin</span>
+      </a>
+    </main>
+
+    <footer class="footer">
+      <span>473 ml</span>
+      <span class="footer__dot">·</span>
+      <span>Aluminium</span>
+      <span class="footer__dot">·</span>
+      <span>Swiss source</span>
+    </footer>
+  </div>
+
+  <script>
+    // Focus is persistent: whichever can was last hovered stays in front
+    // (no reverting to "still" on mouseleave), and the turntable always
+    // keeps spinning forward (clockwise) rather than reversing. Hovering the
+    // bottles themselves is rate-limited so a quick sweep of the cursor
+    // doesn't spin them back and forth; the top-bar words stay instant.
+    (function () {
+      var cans = document.querySelector(".cans");
+      var canHotspots = document.querySelectorAll(".cans__can[data-can]");
+      var wordHotspots = document.querySelectorAll(".topbar__word[data-can]");
+      var COOLDOWN_MS = 1000;
+      var turn = 0;
+      var focused = "still";
+      var lastChangeAt = -Infinity;
+
+      function focus(can) {
+        if (can === focused) return;
+        turn += 1;
+        focused = can;
+        lastChangeAt = Date.now();
+        cans.style.setProperty("--turn", turn);
+      }
+
+      canHotspots.forEach(function (el) {
+        el.addEventListener("mouseenter", function () {
+          if (Date.now() - lastChangeAt < COOLDOWN_MS) return;
+          focus(el.dataset.can);
+        });
+      });
+
+      wordHotspots.forEach(function (el) {
+        el.addEventListener("mouseenter", function () {
+          focus(el.dataset.can);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

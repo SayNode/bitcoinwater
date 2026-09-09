@@ -1,0 +1,259 @@
+:root {
+  --ink: #f4f3ee;
+}
+
+@property --turn {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  font-family: "Futura", "Futura PT", "Century Gothic", sans-serif;
+  background: radial-gradient(115% 85% at 50% 15%, #242383 0%, #141050 45%, #07061e 100%);
+  color: var(--ink);
+}
+
+.page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- top bar ---------- */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 30px 46px;
+}
+
+.topbar__label {
+  min-width: 0;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(244, 243, 238, 0.78);
+}
+
+.topbar__word {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.topbar__word:hover {
+  color: var(--ink);
+}
+
+/* ---------- hero ---------- */
+
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px 24px 48px;
+  gap: 18px;
+}
+
+.hero__title {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  font-weight: 800;
+  font-size: clamp(32px, 6.6vw, 78px);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.hero__subtitle {
+  margin: 0;
+  font-weight: 500;
+  font-size: 19px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: rgba(244, 243, 238, 0.75);
+}
+
+/* ---------- cans ---------- */
+
+.cans {
+  --can-h: clamp(240px, 32vw, 372px);
+  --can-w: calc(var(--can-h) * 0.7467);
+
+  /* lazy-susan turntable: each can sits at --base-angle degrees on a disc;
+     turning the disc 180deg (--turn 0 -> 1) swaps the two slots without the
+     cans crossing through each other. */
+  --rx: calc(var(--can-w) * 0.62);
+  --y-mid: calc(var(--can-h) * 0.05);
+  --y-amp: calc(var(--can-h) * 0.09);
+  --scale-mid: 0.98;
+  --scale-amp: 0.14;
+  --turn: 0;
+
+  position: relative;
+  width: calc(var(--can-w) + var(--rx) * 2);
+  height: calc(var(--can-h) + var(--y-amp) * 2);
+  margin: 12px 0;
+  transition: --turn 0.9s cubic-bezier(0.45, 0, 0.15, 1);
+}
+
+.cans::before {
+  content: "";
+  position: absolute;
+  inset: -22%;
+  z-index: 0;
+  background: radial-gradient(
+    closest-side,
+    rgba(210, 210, 255, 0.6),
+    rgba(140, 140, 255, 0.24) 55%,
+    rgba(140, 140, 255, 0) 80%
+  );
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+.cans__can {
+  --angle: calc(var(--base-angle) + var(--turn) * 180deg);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: var(--can-h);
+  width: auto;
+  transform-origin: 50% 100%;
+  /* x is mirrored (rx - sin, not rx + sin) so increasing --turn always spins
+     the disc clockwise, whichever direction a swap is heading. */
+  transform: translate(
+      calc(var(--rx) - sin(var(--angle)) * var(--rx)),
+      calc(var(--y-mid) + cos(var(--angle)) * var(--y-amp))
+    )
+    scale(calc(var(--scale-mid) + cos(var(--angle)) * var(--scale-amp)));
+  filter: brightness(calc(0.76 + cos(var(--angle)) * 0.24))
+    blur(calc((1 - cos(var(--angle))) * 1px));
+  /* z-index is derived straight from this can's own current depth (front
+     half of the disc vs. back half), so whichever can is actually nearer is
+     always on top -- no timed guess to fall out of sync and glitch. */
+  z-index: calc(round(1.5 + sign(cos(var(--angle))) * 0.5));
+}
+
+.cans__can--sparkling {
+  --base-angle: 135deg;
+}
+
+.cans__can--still {
+  --base-angle: -45deg;
+}
+
+/* ---------- button ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  max-width: 100%;
+  padding: 12px 22px;
+  border: 1px solid rgba(244, 243, 238, 0.4);
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.btn:hover {
+  background: rgba(224, 179, 96, 0.16);
+  border-color: rgba(224, 179, 96, 0.85);
+  color: #e8c884;
+}
+
+.btn__mark {
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* ---------- footer ---------- */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px 24px 30px;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(244, 243, 238, 0.55);
+}
+
+.footer__dot {
+  color: rgba(244, 243, 238, 0.3);
+}
+
+/* ---------- mobile ---------- */
+
+@media (max-width: 720px) {
+  .topbar {
+    padding: 22px 20px;
+  }
+
+  .topbar__label {
+    font-size: 9px;
+    letter-spacing: 0.16em;
+  }
+
+  .hero {
+    padding: 24px 20px 40px;
+    gap: 14px;
+  }
+
+  .hero__subtitle {
+    font-size: 15px;
+    letter-spacing: 0.28em;
+  }
+
+  .cans {
+    --can-h: 55vw;
+  }
+
+  .btn {
+    gap: 8px;
+    padding: 11px 18px;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+  }
+
+  .btn__mark {
+    font-size: 18px;
+  }
+
+  .footer {
+    padding: 18px 20px 24px;
+    gap: 8px;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+  }
+}
