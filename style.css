@@ -290,8 +290,8 @@ body {
   position: absolute;
   right: 46px;
   bottom: 28px;
-  max-width: 260px;
-  font-size: 11px;
+  max-width: 325px;
+  font-size: 13.75px;
   line-height: 1.55;
   letter-spacing: 0.04em;
   text-align: right;
@@ -299,7 +299,7 @@ body {
 }
 
 .stockists__title {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -313,7 +313,7 @@ body {
 }
 
 .stockists__item {
-  margin: 0 0 4px;
+  margin: 0 0 5px;
 }
 
 .stockists__item a {
