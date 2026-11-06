@@ -306,6 +306,19 @@ body {
   color: rgba(244, 243, 238, 0.68);
 }
 
+.stockists__category {
+  margin: 0 0 5px;
+  font-size: 0.85em;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(224, 179, 96, 0.85);
+}
+
+.stockists__list + .stockists__category {
+  margin-top: 14px;
+}
+
 .stockists__list {
   margin: 0;
   padding: 0;
