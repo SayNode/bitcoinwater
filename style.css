@@ -284,6 +284,50 @@ body {
   font-weight: 600;
 }
 
+/* ---------- stockists ---------- */
+
+.stockists {
+  position: absolute;
+  right: 46px;
+  bottom: 28px;
+  max-width: 260px;
+  font-size: 11px;
+  line-height: 1.55;
+  letter-spacing: 0.04em;
+  text-align: right;
+  color: rgba(244, 243, 238, 0.5);
+}
+
+.stockists__title {
+  margin: 0 0 8px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(244, 243, 238, 0.68);
+}
+
+.stockists__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stockists__item {
+  margin: 0 0 4px;
+}
+
+.stockists__item a {
+  color: rgba(244, 243, 238, 0.72);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(244, 243, 238, 0.22);
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.stockists__item a:hover {
+  color: #e8c884;
+  border-color: rgba(224, 179, 96, 0.85);
+}
+
 /* ---------- video section ---------- */
 
 .video-section {
@@ -360,5 +404,13 @@ body {
 
   .label__table {
     margin: 0 auto;
+  }
+
+  .stockists {
+    position: static;
+    max-width: none;
+    margin: 0 auto 28px;
+    padding: 0 20px;
+    text-align: center;
   }
 }
