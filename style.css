@@ -359,6 +359,18 @@ body {
   object-fit: cover;
 }
 
+/* ---------- tablet: stockists list too tall to sit beside the cans ---------- */
+
+@media (min-width: 721px) and (max-width: 1180px) {
+  .stockists {
+    position: static;
+    max-width: none;
+    margin: 0 auto 28px;
+    padding: 0 20px;
+    text-align: center;
+  }
+}
+
 /* ---------- mobile ---------- */
 
 @media (max-width: 720px) {
